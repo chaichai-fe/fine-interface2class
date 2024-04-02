@@ -2,15 +2,17 @@
 
 import Editor from '@monaco-editor/react'
 import axios from 'axios'
-import hljs from 'highlight.js'
-import javascript from 'highlight.js/lib/languages/javascript'
-// Then register the languages you need
-hljs.registerLanguage('javascript', javascript)
 
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 export default function Home() {
   const [code, setCode] = useState('')
+  const [isSimple, setSimple] = useState(false)
+
+  const simpleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.checked)
+    setSimple(e.target.checked)
+  }
 
   const onCodeChnage = (code?: string) => {
     code && setCode(code)
@@ -22,7 +24,8 @@ export default function Home() {
     const res = await axios({
       url: '/api/getClassCode',
       params: {
-        code: code,
+        code,
+        isSimple,
       },
     })
 
@@ -44,10 +47,19 @@ export default function Home() {
           />
         </div>
         <div className="px-2 pt-2">
+          <div className="flex justify-center content-center text-xs pt-2 font-semibold text-zinc-400">
+            isSample：
+            <input
+              type="checkbox"
+              onChange={(e) => simpleChange(e)}
+              checked={isSimple}
+            />
+          </div>
+
           <button
             onClick={startTransform}
             type="submit"
-            className=" flex w-full justify-center rounded-md bg-slate-400 px-3 py-1.5 text-xs font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            className="flex mt-2 w-full justify-center rounded-md bg-slate-400 px-3 py-1.5 text-xs font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Save
           </button>
         </div>
