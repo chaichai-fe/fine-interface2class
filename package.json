@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ast-grep/napi": "^0.20.2",
+    "@headlessui/react": "^1.7.18",
+    "@headlessui/tailwindcss": "^0.2.0",
     "@monaco-editor/react": "^4.6.0",
     "axios": "^1.6.8",
     "highlight.js": "^11.9.0",
