@@ -17,7 +17,7 @@ export default function Home() {
 
   const startTransform = async () => {
     const res = await axios({
-      url: '/api/code',
+      url: '/api/getClassCode',
       params: {
         code,
         isSimple,
