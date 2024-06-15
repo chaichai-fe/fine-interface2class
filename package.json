@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "highlight.js": "^11.9.0",
     "next": "14.1.4",
+    "nextjs-node-loader": "^1.1.5",
     "react": "^18",
     "react-dom": "^18"
   },

@@ -2,18 +2,12 @@
 
 import Editor from '@monaco-editor/react'
 import axios from 'axios'
-
-import { ChangeEvent, useState } from 'react'
-
+import { useState } from 'react'
 import { Switch } from '@headlessui/react'
 
 export default function Home() {
   const [code, setCode] = useState('')
   const [isSimple, setSimple] = useState(false)
-
-  const simpleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSimple(e.target.checked)
-  }
 
   const onCodeChnage = (code?: string) => {
     code && setCode(code)
@@ -21,9 +15,9 @@ export default function Home() {
 
   const [targetCode, setTargetCode] = useState('')
 
-  async function startTransform() {
+  const startTransform = async () => {
     const res = await axios({
-      url: '/api/getClassCode',
+      url: '/api/code',
       params: {
         code,
         isSimple,
@@ -34,15 +28,16 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <>
       <div className="flex justify-between items-center w-full pl-6 pr-6 h-14 border-b font-mono text-xl ">
         <span>Interface2Class</span>
         <div className="flex items-center">
           <button
             onClick={startTransform}
             type="submit"
-            className="flex mt-2 w-full justify-center rounded-md bg-slate-400 px-3 py-1.5 text-xs font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Save
+            className="flex mt-2 w-full justify-center rounded-md bg-black px-3 py-1.5 text-xs font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Save and Transform
           </button>
           <div className="flex ml-2 text-xs pt-2 font-semibold text-slate-400">
             <span className="justify-center content-center">Simple:</span>
@@ -50,8 +45,9 @@ export default function Home() {
               checked={isSimple}
               onChange={setSimple}
               className={`${
-                isSimple ? 'bg-slate-400' : 'bg-slate-300'
-              } relative inline-flex h-6 w-11 items-center rounded-full`}>
+                isSimple ? 'bg-black' : 'bg-slate-300'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
               <span className="sr-only">Enable notifications</span>
               <span
                 className={`${
@@ -80,6 +76,6 @@ export default function Home() {
           />
         </div>
       </div>
-    </div>
+    </>
   )
 }
